@@ -1,0 +1,17 @@
+.container{
+  width: 240px
+}
+.mat-list-item .courseName{
+  word-break: break-word;
+  margin-right: 10px;
+  padding: 16px;
+}
+.mat-list-item{
+  overflow: hidden;
+  height: auto !important;
+}
+.info{
+  word-break: break-word;
+  margin-right: 10px;
+  padding: 16px;
+}

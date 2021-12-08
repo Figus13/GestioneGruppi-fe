@@ -1,0 +1,90 @@
+<mat-toolbar>
+  <span>Consegne</span>
+</mat-toolbar>
+
+
+<mat-accordion multi="false">
+  <mat-expansion-panel *ngFor="let consegna of _consegne " (opened)="setStep(consegna)" hideToggle>
+    <mat-expansion-panel-header>
+
+      <mat-panel-title style="padding-top: 8px;">
+        Consegna: &nbsp; &nbsp; <a> {{consegna.nomeConsegna}}</a>
+      </mat-panel-title>
+      <mat-panel-description  style="padding-top: 8px;">
+        Data di rilascio:<a> {{consegna.rilascio | date:'medium'}}</a>
+      </mat-panel-description>
+      <mat-panel-description style="padding-top: 8px;">
+        Data di scadenza:<a> {{consegna.scadenza | date:'medium'}}</a>
+      </mat-panel-description>
+      <span><button mat-button mat-stroked-button color="primary"
+                    (click)="leggiConsegna(consegna); $event.stopPropagation()"> Leggi Consegna</button></span>
+    </mat-expansion-panel-header>
+
+    <mat-divider></mat-divider>
+    <br>
+
+    <span *ngIf="consegnaScaduta(consegna)">
+      <h3>Consegna Scaduta</h3>
+    </span>
+    <span *ngIf="this.lastElaborato != null && this.lastElaborato.stato === 'NULL' && this._elaborati.length == 1 && !consegnaScaduta(consegna)">
+      <h3>Consegna ancora da leggere</h3>
+    </span>
+    <span *ngIf="this.lastElaborato != null && this.lastElaborato.stato === 'LETTO'  && this._elaborati.length === 2 && this.lastElaborato.voto == '-' && !consegnaScaduta(consegna)">
+      <h3>Carica un elaborato</h3>
+    </span>
+    <span *ngIf="this.lastElaborato != null  && this.lastElaborato.stato === 'CONSEGNATO' && this.lastElaborato.dataCaricamento < this.consegna.scadenza">
+      <h3>Attendi valutazione</h3>
+    </span>
+    <span *ngIf="this.lastElaborato != null && this.lastElaborato.stato === 'LETTO' && this._elaborati.length !== 2 && !consegnaScaduta(consegna)">
+      <h3>Carica versione corretta</h3>
+    </span>
+    <span *ngIf="this.lastElaborato != null && this.lastElaborato.stato === 'NULL' && this._elaborati.length !== 1 && !consegnaScaduta(consegna)">
+      <h3>Revisione ancora da leggere</h3>
+    </span>
+    <span *ngIf="this.lastElaborato != null && this.lastElaborato.stato === 'RIVISTO' && this.lastElaborato.voto != '-'">
+      <h3>L'elaborato è stato valutato con esito: {{this.lastElaborato.voto}}</h3>
+    </span>
+
+    <div
+      *ngIf="this.lastElaborato != null && (this.lastElaborato.stato === 'LETTO') && this.lastElaborato.voto == '-' && !consegnaScaduta(consegna)">
+
+      <form [formGroup]="formGroup" class="myform">
+          <mat-form-field style="display: inline">
+              <span>
+                  <input matInput disabled>
+                  <label> &nbsp; Seleziona immagine: &nbsp; </label>
+                  <button mat-button (click)="uploadFile.click()">
+                    <mat-icon>source</mat-icon>
+                  <span>
+                    <input #uploadFile name="cons" accept="image/*" type="file" (change)="processFile($event)" style="display:none;" />
+                    <span *ngIf="uploadFile.files[0] != undefined" style="margin-left: 5px;">{{uploadFile.files[0].name}}</span>
+                  </span>
+                  </button>
+                  <button style="display: inline; margin-left: 50px" *ngIf="uploadFile.files[0] != undefined" mat-raised-button (click)="upload()">Carica</button>
+              </span>
+           </mat-form-field>
+        </form>
+    </div>
+    <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length">
+      <ng-container matColumnDef="stato">
+        <th mat-header-cell *matHeaderCellDef>Stato</th>
+        <td mat-cell *matCellDef="let element"> {{element.stato}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dataCaricamento">
+        <th mat-header-cell *matHeaderCellDef>Data Caricamento</th>
+        <td mat-cell *matCellDef="let element"> {{element.dataCaricamento | date:'medium'}}  </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button *ngIf="element.stato != 'LETTO'" mat-button mat-stroked-button color="primary"
+                  (click)="leggiElaborato(element); $event.stopPropagation()">Leggi
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+    </table>
+
+  </mat-expansion-panel>
+</mat-accordion>

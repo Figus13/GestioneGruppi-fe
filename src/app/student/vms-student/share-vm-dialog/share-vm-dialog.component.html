@@ -1,0 +1,23 @@
+<mat-dialog-content>
+  <h2 mat-dialog-title align="center" *ngIf="componentList.length == 0" > Tutti i membri del team sono owner di questa VM</h2>
+  <h2 mat-dialog-title align="center" *ngIf="componentList.length != 0" >Condividi ownership</h2>
+  <form [formGroup]="form" *ngIf="componentList.length>0">
+    <mat-form-field appearance="fill">
+      <mat-label>Studenti</mat-label>
+      <mat-select  formControlName="studentSelect" multiple>
+        <mat-select-trigger>
+          {{form.controls.studentSelect.value ? form.controls.studentSelect.value[0] : ''}}
+          <span *ngIf="form.controls.studentSelect.value?.length > 1" class="example-additional-selection">
+            (+{{form.controls.studentSelect.value.length - 1}} {{form.controls.studentSelect.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let component of componentList" [value]="component.id">{{component.id}}, {{component.name}} {{component.firstName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button class="button-dialog" *ngIf="componentList.length === 0" mat-raised-button (click)="close()">Chiudi</button>
+  <button class="button-dialog" *ngIf="componentList.length > 0" mat-raised-button (click)="close()">Cancella</button>
+  <button class="button-dialog" *ngIf="componentList.length > 0" mat-raised-button color="primary" type="submit" [disabled]="form.controls.studentSelect.value == ''" (click)="shareOwnership()">Condividi</button>
+</mat-dialog-actions>

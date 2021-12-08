@@ -1,0 +1,27 @@
+<mat-nav-list role="list">
+  <mat-list-item class="myclass" *ngFor="let course of courses" routerLink="teacher/courses/{{course.name}}/students"
+                 (click)="handleClick(course)">
+    <button *ngIf="deleteCourses.checked" mat-button mat-icon-button color="warn" class="edit-button" (click)="deleteCourse(course); $event.stopPropagation()">
+      <mat-icon>remove_circle_outline</mat-icon>
+    </button>
+
+    <a class="courseName">
+      {{course.name}}
+    </a>
+    <button *ngIf="!deleteCourses.checked" mat-button mat-icon-button color="primary" class="edit-button" (click)="modifyCourse(course)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-list-item>
+  <span>
+  <mat-list-item class="myclass" routerLink="/teacher/courses/newCourse">
+    <mat-icon>add_circle_outline</mat-icon>
+    <a class="courseName"> &nbsp; &nbsp; Nuovo Corso</a>
+  </mat-list-item>
+  <mat-list-item (click)="toggleDelete($event)">
+    <mat-slide-toggle #deleteCourses color=primary class="slide" (click)="toggleDelete($event)"></mat-slide-toggle> &nbsp; Rimuovi corsi
+  </mat-list-item>
+    </span>
+</mat-nav-list>
+<mat-divider></mat-divider>
+
+

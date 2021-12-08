@@ -1,0 +1,30 @@
+<mat-dialog-content>
+  <h2 mat-dialog-title align="center">Crea un nuovo Team</h2>
+  <form [formGroup]="formGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Inserisci il nome del Gruppo</mat-label>
+      <input matInput formControlName="groupName" #input placeholder="Nome del Gruppo">
+    </mat-form-field>
+    <br>
+    <br>
+    <mat-form-field >
+      <mat-label>Timeout della richiesta (ore)</mat-label>
+      <input matInput formControlName="scadenza" type="number">
+    </mat-form-field>
+  </form>
+  <br>
+  <mat-list>
+    <div mat-subheader>Studenti selezionati</div>
+    <mat-list-item *ngFor="let student of students">
+      <div mat-line>{{student.name}}</div>
+      <div mat-line> {{student.firstName}} </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="button-dialog" (click)="close()">Cancella</button>
+  <button mat-raised-button color="primary" class="button-dialog"
+          [disabled]="formGroup.controls.groupName.value === '' || formGroup.controls.scadenza.value<=0"
+          (click)="crea()">Crea</button>
+</mat-dialog-actions>

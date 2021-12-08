@@ -1,0 +1,20 @@
+<app-vms-student (newVM)="createNewVM($event)"
+                 [noTeam]="noTeam"
+                 [virtualMachines]="virtualMachines"
+                 [ownedVMs]="ownedVMs"
+                 [risorseDisponibili]="risorseDisponibili"
+                 [availableStudents]="availableStudentsForVM"
+                 [img] = "vmImg"
+                 (turnOff)="turnOffVm($event)"
+                 (turnOn)="turnOnVm($event)"
+                 (delete)="deleteVm($event)"
+                 (modifiedVM)="modifyVm($event)"
+                 (selectedVM)="getAvailableStudents($event)"
+                 (share)="shareOwnership($event)"
+                 (select)="getRisorse()"
+                 (selectedVmForImg)="getSingleVM($event)"
+                 [course]="course"
+>
+
+
+</app-vms-student>

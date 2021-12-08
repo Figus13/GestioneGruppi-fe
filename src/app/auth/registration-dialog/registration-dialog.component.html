@@ -1,0 +1,44 @@
+<h2 mat-dialog-title align="center">Registrazione</h2>
+<span *ngIf="invalidRegistration" style="color: red">Errore: Non è stato possibile registrarsi!</span>
+<span *ngIf="invalidRegistrationMail" style="color: red">La mail deve essere di un docente o uno studente del Politecnico e l'ID deve coincidere!</span>
+
+<mat-dialog-content style="max-width: 400px">
+  <form>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="Cognome"
+             [formControl]="nomeControl">
+      <mat-error *ngIf="nomeControl.invalid">{{getErrorNome()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="Nome"
+             [formControl]="cognomeControl">
+      <mat-error *ngIf="cognomeControl.invalid">{{getErrorCognome()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="ID"
+             [formControl]="matricolaControl">
+      <mat-error *ngIf="matricolaControl.invalid">{{getErrorMatricola()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="Email"
+             [formControl]="emailControl">
+      <mat-error *ngIf="emailControl.invalid">{{getErrorEmail()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="Password"
+             type="password"
+             [formControl]="passwordControl">
+      <mat-error *ngIf="passwordControl.invalid">{{getErrorPassword()}}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button class="button-dialog" mat-raised-button mat-dialog-close >Cancella</button>
+  <button class="button-dialog" mat-raised-button color="primary" (click)="register()" type="submit">Registrati</button>
+</mat-dialog-actions>

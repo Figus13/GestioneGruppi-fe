@@ -1,0 +1,14 @@
+section{
+  padding: 10px;
+}
+.button-dialog{
+  width: 100px;
+  margin-right: 5px;
+}
+.example-fill-remaining-space{
+  flex: 1 1 auto;
+}
+.close-button{
+  float: right;
+  margin-bottom: 5px;
+}

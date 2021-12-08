@@ -1,0 +1,21 @@
+<h2 mat-dialog-title align="center">Carica un'immagine</h2>
+<mat-dialog-content>
+<form>
+<mat-form-field>
+  <label class="image-upload-container btn btn-bwm">
+    <span>Seleziona immagine</span>
+    <input matInput disabled >
+    <button mat-button (click)="file.click()">
+      <mat-icon>source</mat-icon>
+      <input #file name="img" accept="image/*" type="file" (change)="processFile($event)" style="display:none;" />
+
+      <span *ngIf="file.files[0] != undefined" style="margin-left: 3px;">{{file.files[0].name}}</span>
+    </button>
+  </label>
+</mat-form-field>
+</form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="dialog-button" (click)="close()">Cancella</button>
+  <button mat-raised-button color="primary" class="dialog-button" (click)="upload()">Carica</button>
+</mat-dialog-actions>

@@ -1,0 +1,5 @@
+<p>Vuoi eliminare il corso {{this.course.name}} ?</p>
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close class="button-dialog" (click)="close(true)">Elimina corso</button>
+  <button mat-raised-button color="primary" class="button-dialog" (click)="close(false)" type="submit">Indietro</button>
+</mat-dialog-actions>

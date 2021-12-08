@@ -1,0 +1,16 @@
+<mat-dialog-content>
+<div>
+  <span>
+    <button class="close-button" mat-icon-button color="warn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+</div>
+<div >
+  <img *ngIf="!emptyImg()" [src]="img" width="100%" height=auto>
+</div>
+<div>
+  <h3 *ngIf="emptyImg()" style="text-align: center"> Non hai consegnato entro la scadenza</h3>
+</div>
+</mat-dialog-content>
+

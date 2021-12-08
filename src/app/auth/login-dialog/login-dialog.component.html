@@ -1,0 +1,26 @@
+<h2 mat-dialog-title align="center">Accedi</h2>
+<span *ngIf="loginFailed" style="color: red">Errore: username e/o password errati</span>
+<span *ngIf="unreachableServer" style="color: red">Server irraggiungibile</span>
+<mat-dialog-content>
+  <form>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="Email"
+             [formControl]="emailControl">
+      <mat-error *ngIf="emailControl.invalid">{{getErrorEmail()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput
+             placeholder="Password"
+             type="password"
+             [formControl]="passwordControl">
+      <mat-error *ngIf="passwordControl.invalid">{{getErrorPassword()}}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button class="button-dialog" mat-raised-button mat-dialog-close>Cancella</button>
+  <button class="button-dialog" mat-raised-button color="primary" (click)="login()" type="submit">Accedi</button>
+</mat-dialog-actions>
+

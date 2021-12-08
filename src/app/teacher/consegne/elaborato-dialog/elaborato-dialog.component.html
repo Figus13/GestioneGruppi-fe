@@ -1,0 +1,63 @@
+<mat-dialog-content>
+  <div *ngIf="!emptyImg() || (data.elaborato.stato === 'LETTO' || data.elaborato.stato === 'NULL')">
+    <span>
+        <button class="close-button" mat-icon-button color="warn" (click)="close()">
+          <mat-icon>close</mat-icon>
+        </button>
+    </span>
+  </div>
+  <div>
+    <img *ngIf="!emptyImg()" [src]="img" width="100%" height=auto>
+    <span *ngIf="emptyImg() && data.elaborato.stato === 'CONSEGNATO'"><b>Non è stato caricato un elaborato entro la scadenza</b></span>
+    <span *ngIf="emptyImg() && data.elaborato.stato === 'LETTO' && !data.noConsegnaMaRevisione">La consegna è stata letta dallo studente</span>
+    <span *ngIf="emptyImg() && data.elaborato.stato === 'NULL' && !data.noConsegnaMaRevisione">La consegna non è stata letta dallo studente</span>
+    <span *ngIf="emptyImg() && data.elaborato.stato === 'LETTO' && data.noConsegnaMaRevisione">La revisione è stata letta dallo studente</span>
+    <span *ngIf="emptyImg() && data.elaborato.stato === 'NULL' && data.noConsegnaMaRevisione">La revisione non è stata letta dallo studente</span>
+
+  </div>
+  <span *ngIf="errore">Assegna un voto <span *ngIf="!consegnaScaduta()">o fai una revisione</span> </span>
+  <div *ngIf="lastOne">
+    <div *ngIf="data.elaborato.stato === 'CONSEGNATO' && lastOne" style="align-content: baseline">
+      <section>
+        <form [formGroup]="uploadForm">
+          <mat-form-field>
+            <label class="image-upload-container btn btn-bwm">
+              <span>Seleziona immagine</span>
+              <input matInput disabled >
+              <button mat-button (click)="upload.click()">
+                <mat-icon>source</mat-icon>
+                <input #upload name="cons" accept="image/*" formControlName="revisioneElaborato" type="file" (change)="revisione($event)" style="display:none;" />
+
+                <span *ngIf="upload.files[0] != undefined" style="margin-left: 3px;">{{upload.files[0].name}}</span>
+              </button>
+            </label>
+          </mat-form-field>
+        </form>
+      </section>
+      <mat-divider></mat-divider>
+      <section *ngIf="!consegnaScaduta() && checkLast()">
+        <mat-slide-toggle #slideRiconsegna (change)="changeSlide('slideRiconsegna')">
+          Permetti riconsegna
+        </mat-slide-toggle>
+        </section>
+      <mat-divider></mat-divider>
+      <section>
+        <mat-slide-toggle #slideVoto (change)="changeSlide('slideVoto')">
+          Voto
+        </mat-slide-toggle>
+        <form [formGroup]="votoGroup">
+          <mat-form-field appearance="fill">
+            <mat-label>Attribuisci un voto:</mat-label>
+            <input #voto matInput formControlName="voto" [disabled]>
+          </mat-form-field>
+        </form>
+        </section>
+    </div>
+  </div>
+</mat-dialog-content>
+<div *ngIf="data.elaborato.stato === 'CONSEGNATO'">
+  <mat-dialog-actions align="center" >
+    <button *ngIf="lastOne" class="button-dialog" mat-raised-button (click)="close()">Cancella</button>
+    <button *ngIf="lastOne" class="button-dialog" mat-raised-button color="primary"  [disabled]="checkFilesOrVoto()" type="submit"  (click)="onSubmit()">Carica</button>
+  </mat-dialog-actions>
+</div>

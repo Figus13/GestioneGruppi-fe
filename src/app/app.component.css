@@ -1,0 +1,13 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+mat-sidenav-container{ height: 100%;}
+mat-sidenav-content{padding: 5px;}
+table {width: 100%;}
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+div{
+  height: 100%;
+}

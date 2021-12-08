@@ -1,0 +1,13 @@
+<div *ngIf="!isAuthenticated()">
+  <app-home></app-home>
+</div>
+<div *ngIf="isAuthenticated()">
+  <div *ngIf="isTeacher()">
+    <app-teacher-home></app-teacher-home>
+  </div>
+  <div *ngIf="isStudent()">
+    <app-student-home></app-student-home>
+  </div>
+</div>
+
+

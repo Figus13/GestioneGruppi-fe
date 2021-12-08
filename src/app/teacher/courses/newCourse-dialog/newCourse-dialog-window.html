@@ -1,0 +1,100 @@
+<h2 mat-dialog-title align="center">Aggiungi un nuovo corso</h2>
+
+
+<mat-dialog-content>
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Dettagli del corso</ng-template>
+        <mat-form-field >
+          <input matInput formControlName="nameControl"
+                 placeholder="Nome corso">
+          <mat-error *ngIf="firstFormGroup.controls.nameControl">{{getErrorName()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="acronymControl"
+                 placeholder="Acronimo">
+          <mat-error *ngIf="firstFormGroup.controls.acronymControl">{{getErrorAcronym()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field >
+          <input matInput
+                 type='number'
+                 formControlName="minControl"
+                 placeholder="N° minimo studenti per gruppo">
+          <mat-error *ngIf="firstFormGroup.controls.minControl">{{getErrorMin()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field >
+          <input matInput
+                 type='number'
+                 formControlName="maxControl"
+                 placeholder="N° massimo studenti per gruppo">
+          <mat-error *ngIf="firstFormGroup.controls.maxControl">{{getErrorMax()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field >
+
+          <!-- the matInput with display:none makes the magic. It's ugly, I've warned you -->
+          <input matInput formControlName="enabledControl" style="display: none">
+          <mat-checkbox formControlName="enabledControl">Abilita corso</mat-checkbox>
+
+        </mat-form-field>
+        <div align="center">
+          <button mat-raised-button color="primary" matStepperNext>Avanti</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Dettagli Modello VM</ng-template>
+        <mat-form-field>
+          <input matInput
+                 type='number'
+                 placeholder="N° di CPU virtuali"
+                 formControlName="vcpuControl">
+          <mat-error *ngIf="secondFormGroup.controls.vcpuControl">{{getErrorVCPU()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+                 type='number'
+                 placeholder="Spazio su disco (MB)"
+                 formControlName="diskControl">
+          <mat-error *ngIf="secondFormGroup.controls.diskControl">{{getErrorDisk()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+                 type='number'
+                 placeholder="Ram (MB)"
+                 formControlName="ramControl">
+          <mat-error *ngIf="secondFormGroup.controls.ramControl">{{getErrorRam()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+                 type='number'
+                 placeholder="N° massimo di VM attive"
+                 formControlName="vmActiveControl">
+          <mat-error *ngIf="secondFormGroup.controls.vmActiveControl">{{getErrorVMActive()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+                 type='number'
+                 placeholder="N° massimo di VM totali"
+                 formControlName="vmTotalControl">
+          <mat-error *ngIf="secondFormGroup.controls.vmTotalControl">{{getErrorVMTotal()}}</mat-error>
+        </mat-form-field>
+        <div align="center">
+          <button class="button-dialog" mat-raised-button matStepperPrevious>Indietro</button>
+          <button class="button-dialog" mat-raised-button (click)="stepper.reset()">Resetta</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="button-dialog"(click)="close()">Cancella</button>
+  <button mat-raised-button color="primary" class="button-dialog" (click)="addNewCourse()" [disabled]="checkForm()" type="submit">Aggiungi</button>
+</mat-dialog-actions>

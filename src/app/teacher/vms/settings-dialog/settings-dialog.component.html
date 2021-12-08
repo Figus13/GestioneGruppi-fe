@@ -1,0 +1,45 @@
+<h2 mat-dialog-title align="center">Modello di Virtual Machine</h2>
+
+
+<h3><span *ngIf="error">Errore! Le risorse impegnate sono superiori</span></h3>
+
+<mat-dialog-content>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Numero di vCPU:</mat-label>
+      <input matInput formControlName="numVcpu">
+      <mat-error *ngIf="form.controls.numVcpu">{{getErrorNumVCPU()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Spazio Disco (MB):</mat-label>
+      <input matInput formControlName="diskSpaceMB">
+      <mat-error *ngIf="form.controls.diskSpaceMB">{{getErrorDisk()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Ram (MB):</mat-label>
+      <input matInput formControlName="ramMB">
+      <mat-error *ngIf="form.controls.ramMB">{{getErrorRam()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>N° massimo di VM attive:</mat-label>
+      <input matInput formControlName="maxActiveVM">
+      <mat-error *ngIf="form.controls.maxActiveVM">{{getErrorVmAttive()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>N° massimo di VM totali</mat-label>
+      <input matInput formControlName="maxTotalVM">
+      <mat-error *ngIf="form.controls.maxTotalVM">{{getErrorVmTotal()}}</mat-error>
+    </mat-form-field>
+    <br>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="button-dialog" (click)="close()">Cancella</button>
+  <button mat-raised-button class="button-dialog" color="primary" type="submit" (click)="updateModelloVM()" [disabled]="checkForm()" >Modifica</button>
+
+</mat-dialog-actions>

@@ -1,0 +1,21 @@
+h2{
+  margin-top: 15px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 20%;
+}
+
+span{
+  display: inline-block;
+}
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+#paginator{
+  position: absolute;
+  right: 5px;
+}

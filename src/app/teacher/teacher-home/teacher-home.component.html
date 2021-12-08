@@ -1,0 +1,43 @@
+<mat-toolbar color="primary">
+  <mat-icon aria-hidden="false" (click)="toggleForMenuClick()">menu</mat-icon>
+  <span (click)="redirect()" style="cursor: pointer;">
+    VirtualLabs
+  </span>
+  <span class="example-fill-remaining-space"></span>
+  <span #profile >
+    <button mat-button [mat-menu-trigger-for]="menu">
+
+    <img class="avatar" src="{{img}}"
+         alt="">
+          {{email}}
+      </button>
+
+  <mat-menu #menu="matMenu" style="margin-left: 50px">
+    <button mat-menu-item (click)="setImg()" style="width: 200px">Carica immagine</button>
+    <button mat-menu-item (click)="logout()" style="width: 200px">Logout</button>
+  </mat-menu>
+  </span>
+</mat-toolbar>
+<mat-toolbar>
+  <span>
+    {{viewCourseName}}
+  </span>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened position="start" #side>
+    <app-courses-cont (selectedCourse)="selectCourse($event)"></app-courses-cont>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <nav mat-tab-nav-bar #tab>
+      <a mat-tab-link
+         *ngFor="let link of navLinks"
+         [routerLink]="link.path"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive">
+        {{link.label}}
+      </a>
+    </nav>
+    <router-outlet> </router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

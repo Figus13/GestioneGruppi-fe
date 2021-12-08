@@ -1,0 +1,11 @@
+.close-button{
+  float: right;
+  margin-bottom: 5px;
+}
+mat-dialog-content{
+  max-width: 600px;
+  min-width: 250px;
+  height: 100%;
+  max-height: 600px;
+  min-height: 250px;
+}

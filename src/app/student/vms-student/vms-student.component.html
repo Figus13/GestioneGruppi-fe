@@ -1,0 +1,35 @@
+<div *ngIf="noTeam">
+  <h2>Non fai parte di un gruppo</h2>
+  <p> Accetta una richiesta o crea un gruppo per visualizzare questa Tab</p>
+</div>
+<div *ngIf="!noTeam">
+  <mat-toolbar>
+    <span>Virtual Machines</span>
+    <span class="example-fill-remaining-space"></span>
+    <span>
+<button mat-mini-fab color="primary" (click)="openDialogNewVirtualMachine()" [disabled]="corsoDisattivato()">
+  <mat-icon>add</mat-icon>
+</button>
+ </span>
+  </mat-toolbar>
+  <mat-selection-list [multiple]="false" [disabled]="corsoDisattivato()">
+    <mat-list-option *ngFor="let vm of  this._virtualMachines" (click)="openVM(vm)">
+      <span>
+
+       Numero vCPU: {{vm.numVcpu}} &nbsp; &nbsp; &nbsp;
+       Spazio disco: {{vm.diskSpaceMB}} MB  &nbsp; &nbsp; &nbsp;
+       Ram: {{vm.ramMB}} MB  &nbsp; &nbsp; &nbsp;
+       Attiva: {{vm.attiva}} &nbsp; &nbsp; &nbsp;
+       Creator: {{vm.creator}} &nbsp; &nbsp; &nbsp;
+
+        <span *ngIf="ownsVM(vm.id) && !corsoDisattivato()">
+          <span><button *ngIf="vm.attiva" mat-button mat-icon-button (click)="turnOffVm(vm); $event.stopPropagation()"><mat-icon [ngStyle]="{'color':'green'}">power_settings_new</mat-icon></button></span>
+          <span><button *ngIf="!vm.attiva" mat-button mat-icon-button (click)="turnOnVm(vm); $event.stopPropagation()"><mat-icon [ngStyle]="{'color':'red'}">power_settings_new</mat-icon></button></span>
+          <span><button mat-button mat-icon-button color="primary"  [disabled]="vm.attiva"  (click)="modifyVM(vm); $event.stopPropagation()"> <mat-icon>edit</mat-icon> </button></span>
+          <span><button mat-button mat-icon-button color="primary"  (click)="shareOwnership(vm); $event.stopPropagation()"> <mat-icon>share</mat-icon> </button></span>
+          <span><button mat-button mat-icon-button color="primary"  [disabled]="vm.attiva" (click)="deleteVm(vm); $event.stopPropagation()"><mat-icon>delete</mat-icon></button></span>
+      </span>
+      </span>
+    </mat-list-option>
+  </mat-selection-list>
+</div>

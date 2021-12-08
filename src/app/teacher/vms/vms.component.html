@@ -1,0 +1,29 @@
+<mat-toolbar>
+  <span>Macchine Virtuali</span>
+  <span class="example-fill-remaining-space"></span>
+  <span>
+<button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="openSettings()">
+  <mat-icon>settings</mat-icon>
+</button>
+ </span>
+</mat-toolbar>
+
+<mat-accordion *ngFor="let gruppo of gruppi">
+  <mat-expansion-panel [expanded]="step === gruppi.indexOf(gruppo)" (opened)="setStep(gruppo)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Team:  &nbsp; &nbsp; <a>{{gruppo.name}}</a>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let vm of macchineVirtuali" (click)="openVM(vm)">
+        <span> Numero vCPU: {{vm.numVcpu}} &nbsp; &nbsp; &nbsp;</span>
+        <span> Spazio disco: {{vm.diskSpaceMB}} MB  &nbsp; &nbsp; &nbsp;</span>
+        <span> Ram: {{vm.ramMB}} MB  &nbsp; &nbsp; &nbsp;</span>
+        <span> Attiva: {{vm.attiva}} &nbsp; &nbsp; &nbsp;</span>
+        <span> Creata da: {{vm.creator}} &nbsp; &nbsp; &nbsp;</span>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,43 @@
+<h2 mat-dialog-title align="center">Modifica Macchina Virtuale</h2>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Risorse disponibili</mat-card-title>
+    <mat-card-subtitle>Totale corrente delle risorse disponibili</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    Numero di vCPU: {{this.risorseDisponibili.numVcpu}}
+    <br>
+    Spazio su Disco: {{this.risorseDisponibili.diskSpaceMB}}
+    <br>
+    Ram utilizzabile: {{this.risorseDisponibili.ramMB}}
+    <br>
+    Numero di VM: {{this.risorseDisponibili.maxTotalVM}}
+  </mat-card-content>
+</mat-card>
+<br>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Numero di vCPU:</mat-label>
+      <input matInput type="number" formControlName="numVcpu">
+      <mat-error *ngIf="form.controls.numVcpu">{{getErrorNumVcpu()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Spazio Disco (MB):</mat-label>
+      <input matInput type="number" formControlName="diskSpaceMB">
+      <mat-error *ngIf="form.controls.diskSpaceMB">{{getErrorDiskSpaceMB()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Ram (MB):</mat-label>
+      <input matInput type="number" formControlName="ramMB">
+      <mat-error *ngIf="form.controls.ramMB">{{getErrorRamMB()}}</mat-error>
+    </mat-form-field>
+    <br>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button class="button-dialog" mat-raised-button (click)="close()">Cancella</button>
+  <button class="button-dialog" mat-raised-button color="primary" type="submit" [disabled]="form.untouched || !form.controls.numVcpu.valid || !form.controls.diskSpaceMB.valid || !form.controls.ramMB.valid" (click)="updateModelloVM()">Salva</button>
+</mat-dialog-actions>

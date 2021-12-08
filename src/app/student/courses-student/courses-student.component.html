@@ -1,0 +1,11 @@
+<div class="container">
+  <mat-nav-list role="list">
+    <mat-list-item *ngFor="let course of courses" routerLink="/student/courses/{{course.name}}/teams" (click)="handleClick(course)">
+      <a class="courseName">
+        {{course.name}}
+      </a>
+    </mat-list-item>
+  </mat-nav-list>
+  <h3 *ngIf="courses != null && courses.length == 0" class="info"> Non risulti iscritto a nessun corso!<br>Attendi che un professore ti aggiunga ad un corso.</h3>
+</div>
+

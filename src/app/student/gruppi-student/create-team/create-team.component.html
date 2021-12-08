@@ -1,0 +1,67 @@
+<div *ngIf="!noAvailableStudents" style="margin-left: 15px;">
+  <h2><b>Crea un nuovo gruppo</b></h2>
+  <span *ngIf="this.course != null">
+   <h3>Numero minimo studenti in un gruppo:  {{this.course.min}}</h3>
+  </span>
+  <br>
+  <span *ngIf="this.course != null">
+    <h3>Numero massimo studenti in un gruppo:  {{this.course.max}}</h3>
+   </span>
+  <br>
+  <mat-form-field>
+    <mat-label>Filtra studenti</mat-label>
+    <label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Studente" #input>
+    </label>
+  </mat-form-field>
+  <div>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? studentiSelezionatiPerTeam.toggle(row) : null;"
+                        [checked]="studentiSelezionatiPerTeam.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> ID</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> First Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+  </div>
+  <div>
+    <span *ngIf="!attesaConferma && this.course != null">
+      <button mat-raised-button (click)="creaGruppo()" [disabled]="checkCardinality()" style="margin-top: 15px;">Crea</button>
+    </span>
+
+    <span class="example-fill-remaining-space"></span>
+    <span id="paginator">
+      <mat-paginator #matPaginator [pageSizeOptions]="[5]"></mat-paginator>
+    </span>
+  </div>
+</div>
+<br *ngIf="attesaConferma != null && attesaConferma">
+<h3 *ngIf="attesaConferma != null && attesaConferma" style="margin: 15px;">
+  In attesa di conferma del gruppo da parte degli altri membri
+</h3>
+<span *ngIf="noAvailableStudents && attesaConferma != null && attesaConferma === false">
+  Nessuno studente disponibile per la formazione di un gruppo
+</span>
+
+<br>
+<mat-divider></mat-divider>
+

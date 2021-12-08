@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{courseName}}</h2>
+<h3><span *ngIf="error">Errore!</span></h3>
+<h3><span *ngIf="update">L'operazione è andata a buon fine</span></h3>
+<h3><span *ngIf="minMaxError" style="color: red">Il minimo non può essere maggiore del massimo</span></h3>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>N° minimo di studenti in un gruppo</mat-label>
+      <input matInput type="number" formControlName="min">
+      <mat-error *ngIf="form.controls.min">{{getErrorMin()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>N° massimo di studenti in un gruppo</mat-label>
+      <input matInput type="number" formControlName="max">
+      <mat-error *ngIf="form.controls.max">{{getErrorMax()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+    <mat-label>Corso attivo</mat-label>
+    <input matInput disabled>
+    <input type="checkbox" formControlName="enabled">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="center">
+  <button mat-raised-button (click)="close()" class="button-dialog">Cancella</button>
+  <button mat-raised-button color="primary" class="button-dialog" (click)="updateCorso()" [disabled]="checkForm()">Modifica</button>
+</mat-dialog-actions>
+

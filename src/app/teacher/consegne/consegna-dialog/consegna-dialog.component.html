@@ -1,0 +1,39 @@
+<h2 mat-dialog-title align="center">Nuova Consegna</h2>
+<mat-dialog-content style="max-width: 400px; min-width: 250px; height: 100%;">
+  <div *ngIf="errors" style="color: red">Campi non validi</div>
+  <form [formGroup]="formGroup">
+    <mat-form-field style="width: 100%">
+      <input matInput formControlName="nameControl"
+             placeholder="Nome consegna">
+      <mat-error *ngIf="formGroup.controls.nameControl">{{getErrorName()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <label class="image-upload-container btn btn-bwm">
+        <span>Seleziona immagine</span>
+        <input matInput disabled >
+        <button mat-button (click)="fileConsegna.click()">
+          <mat-icon>source</mat-icon>
+          <input #fileConsegna name="cons" accept="image/*" type="file" (change)="processFile($event)" style="display:none;" />
+          <span *ngIf="fileConsegna.files[0] != undefined" style="margin-left: 3px;">{{fileConsegna.files[0].name}}</span>
+        </button>
+      </label>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="full-width">
+      <mat-label>Scadenza</mat-label>
+      <label>
+        <input matInput [matDatepicker]="datepicker" [min]="dataOdierna()" disabled formControlName="deliveryDate">
+      </label>
+      <mat-datepicker-toggle matSuffix [for]="datepicker" ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker disabled="false"  ></mat-datepicker>
+    </mat-form-field>
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close class="button-dialog">Cancella</button>
+  <button mat-raised-button color="primary" class="button-dialog"
+          [disabled]="fileConsegna.files[0] === undefined || formGroup.controls.nameControl.value === ''" (click)="addNewConsegna()" type="submit">Aggiungi</button>
+</mat-dialog-actions>

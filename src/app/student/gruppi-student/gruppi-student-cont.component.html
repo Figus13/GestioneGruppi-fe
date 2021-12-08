@@ -1,0 +1,11 @@
+<div *ngIf="!corsoAttivato && teamPresent !== 1 && teamPresent !== 0">
+  <h2><b>Il corso non è attivo</b></h2>
+</div>
+<app-gruppi-student *ngIf="teamPresent === 1" [team]="team" [members]="members"></app-gruppi-student>
+<div *ngIf="teamPresent === -1 && corsoAttivato">
+    <app-create-team [members]="members" (newGroup)="proposeTeam($event)" [_course]="course"
+                     [attesaConferma]="attesaConferma"></app-create-team>
+    <app-accept-team-request [proposte]="proposte" [attesaConferma]="attesaConferma" (accetta)="accettaProposta($event)"
+                             (rifiuta)="rifiutaProposta($event)"></app-accept-team-request>
+</div>
+

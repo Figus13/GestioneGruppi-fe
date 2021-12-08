@@ -1,0 +1,6 @@
+<app-consegne [consegne]="consegne" [elaborati]="elaborati" [img]="elaboratoImg"
+              [imgConsegna]="consegnaImg"
+              (newConsegnaEmitter)="addConsegna($event)"
+              (getElaboratiEmitter)="getElaboratiForCourseAndConsegnaId($event)" (elaborato)="getElaboratoImg($event)"
+              (uploadRevisione)="uploadRevisione($event)" (getConsegna)="getConsegna($event)"></app-consegne>
+
